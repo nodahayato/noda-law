@@ -66,7 +66,39 @@ module.exports = {
     // trackingId: `ADD YOUR TRACKING ID HERE`,
     // },
     // },
-    `gatsby-plugin-feed`,
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        feeds: [{
+          serialize: ({ query: { site, allMarkdownRemark } }) =>
+            allMarkdownRemark.edges.map(({ node }) => {
+              const url = new URL(node.fields.slug, site.siteMetadata.siteUrl).href
+              return {
+                title: node.frontmatter.title,
+                date: node.frontmatter.date,
+                description: node.excerpt,
+                url,
+                guid: url,
+                custom_elements: [{ 'content:encoded': node.html }],
+              }
+            }),
+          query: `{
+            allMarkdownRemark(limit: 1000, sort: { fields: [frontmatter___date], order: DESC }) {
+              edges {
+                node {
+                  frontmatter { title date }
+                  fields { slug }
+                  excerpt
+                  html
+                }
+              }
+            }
+          }`,
+          output: `/rss.xml`,
+          title: `研究ノート RSS`,
+        }],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
