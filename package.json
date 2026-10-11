@@ -26,12 +26,12 @@
     "gatsby-transformer-sharp": "^3.7.0",
     "katex": "^0.13.11",
     "lodash": "^4.17.21",
-    "node-sass": "^6.0.0",
     "prismjs": "^1.23.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-helmet": "^6.1.0"
+    "react-helmet": "^6.1.0",
+    "sass": "1.32.13"
   },
   "devDependencies": {
     "eslint": "^7.28.0",
@@ -50,11 +50,18 @@
   },
   "scripts": {
     "build": "gatsby build",
+    "postbuild": "node scripts/build-404.js",
+    "test:404": "node scripts/test-404.js",
     "dev": "gatsby develop",
     "develop": "gatsby develop",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\"",
     "lint": "eslint --ext .js,.jsx --ignore-pattern public .",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write 'src/**/*.js' 'content/**/*.md'",
     "fix-semi": "eslint --quiet --ignore-pattern node_modules --ignore-pattern public --parser babel-eslint --no-eslintrc --rule '{\"semi\": [2, \"never\"], \"no-extra-semi\": [2]}' --fix gatsby-node.js"
-  }
+  },
+  "engines": {
+    "node": "16.20.2",
+    "npm": "8.19.4"
+  },
+  "packageManager": "npm@8.19.4"
 }

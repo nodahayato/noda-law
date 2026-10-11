@@ -1,0 +1,6 @@
+# mozjpeg 7 assumes Intel Homebrew's /usr/local prefix on every macOS host.
+# Autoconf reads CONFIG_SITE after command-line assignments, so use the actual
+# Homebrew prefix for its static PNG library without modifying node_modules.
+if [ "$(uname -s)" = Darwin ]; then
+  libpng_LIBS="$(brew --prefix libpng)/lib/libpng16.a -lz"
+fi
