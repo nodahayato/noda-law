@@ -19,9 +19,14 @@ jobs:
       - run: npm run test:404
       - run: npm run build
       - run: python3 scripts/test-generated.py
+      - name: Set up Node for Firebase deployment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NODA_LAW }}'
           channelId: live
           projectId: noda-law
+          firebaseToolsVersion: '15.33.0'
